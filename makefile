@@ -53,25 +53,28 @@ clean:
 	@rm -rf lib
 
 setup:
-	@install -m 755 -d \
+	install -m 755 -d \
 		$(DESTDIR)/usr/bin \
 		$(DESTDIR)/etc/$(PROGN)/samples \
 		$(DESTDIR)/etc/udev/rules.d
-	@cp bin/$(PROGN) $(DESTDIR)/usr/bin
-	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g213-led
-	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g410-led
-	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g413-led
-	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g512-led
-	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g513-led
-	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g610-led
-	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g815-led
-	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g910-led
-	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/gpro-led
-	@cp sample_profiles/* $(DESTDIR)/etc/$(PROGN)/samples
-	@cp udev/$(PROGN).rules $(DESTDIR)/etc/udev/rules.d
-	@test -s /usr/bin/systemd-run && \
+	install -m 755 bin/$(PROGN) $(DESTDIR)/usr/bin
+	ln -sf $(PROGN) $(DESTDIR)/usr/bin/g213-led
+	ln -sf $(PROGN) $(DESTDIR)/usr/bin/g410-led
+	ln -sf $(PROGN) $(DESTDIR)/usr/bin/g413-led
+	ln -sf $(PROGN) $(DESTDIR)/usr/bin/g512-led
+	ln -sf $(PROGN) $(DESTDIR)/usr/bin/g513-led
+	ln -sf $(PROGN) $(DESTDIR)/usr/bin/g610-led
+	ln -sf $(PROGN) $(DESTDIR)/usr/bin/g815-led
+	ln -sf $(PROGN) $(DESTDIR)/usr/bin/g910-led
+	ln -sf $(PROGN) $(DESTDIR)/usr/bin/gpro-led
+	install -m 644 sample_profiles/* $(DESTDIR)/etc/$(PROGN)/samples
+	install -m 644 udev/$(PROGN).rules $(DESTDIR)/etc/udev/rules.d
+	test -s /usr/bin/systemd-run && \
 		install -m 755 -d $(DESTDIR)$(SYSTEMDDIR)/system && \
-		cp systemd/$(PROGN)-reboot.service $(DESTDIR)$(SYSTEMDDIR)/system
+		install -m 644 \
+			systemd/$(PROGN)-reboot.service \
+			systemd/$(PROGN).service \
+			$(DESTDIR)$(SYSTEMDDIR)/system
 
 install-lib: lib
 	@install -m 755 -d $(libdir)
