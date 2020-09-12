@@ -58,15 +58,15 @@ setup:
 		$(DESTDIR)/etc/$(PROGN)/samples \
 		$(DESTDIR)/etc/udev/rules.d
 	@cp bin/$(PROGN) $(DESTDIR)/usr/bin
-	@test -s $(DESTDIR)/usr/bin/g213-led || ln -s /usr/bin/$(PROGN) $(DESTDIR)/usr/bin/g213-led
-	@test -s $(DESTDIR)/usr/bin/g410-led || ln -s /usr/bin/$(PROGN) $(DESTDIR)/usr/bin/g410-led
-	@test -s $(DESTDIR)/usr/bin/g413-led || ln -s /usr/bin/$(PROGN) $(DESTDIR)/usr/bin/g413-led
-	@test -s $(DESTDIR)/usr/bin/g512-led || ln -s /usr/bin/$(PROGN) $(DESTDIR)/usr/bin/g512-led
-	@test -s $(DESTDIR)/usr/bin/g513-led || ln -s /usr/bin/$(PROGN) $(DESTDIR)/usr/bin/g513-led
-	@test -s $(DESTDIR)/usr/bin/g610-led || ln -s /usr/bin/$(PROGN) $(DESTDIR)/usr/bin/g610-led
-	@test -s $(DESTDIR)/usr/bin/g815-led || ln -s /usr/bin/$(PROGN) $(DESTDIR)/usr/bin/g815-led
-	@test -s $(DESTDIR)/usr/bin/g910-led || ln -s /usr/bin/$(PROGN) $(DESTDIR)/usr/bin/g910-led
-	@test -s $(DESTDIR)/usr/bin/gpro-led || ln -s /usr/bin/$(PROGN) $(DESTDIR)/usr/bin/gpro-led
+	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g213-led
+	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g410-led
+	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g413-led
+	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g512-led
+	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g513-led
+	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g610-led
+	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g815-led
+	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g910-led
+	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/gpro-led
 	@cp sample_profiles/* $(DESTDIR)/etc/$(PROGN)/samples
 	@cp udev/$(PROGN).rules $(DESTDIR)/etc/udev/rules.d
 	@test -s /usr/bin/systemd-run && \
@@ -83,6 +83,7 @@ install-dev: install-lib
 	@install -m 644 src/classes/*.h $(includedir)/$(PROGN)
 
 install: setup
+	# Do not override existing profiles
 	@test -s /etc/$(PROGN)/profile || \
 		cp /etc/$(PROGN)/samples/group_keys /etc/$(PROGN)/profile
 	@test -s /etc/$(PROGN)/reboot || \
