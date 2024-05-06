@@ -54,9 +54,7 @@ clean:
 
 setup:
 	@install -m 755 -d \
-		$(DESTDIR)/usr/bin \
-		$(DESTDIR)/etc/$(PROGN)/samples \
-		$(DESTDIR)/etc/udev/rules.d
+		$(DESTDIR)/etc/$(PROGN)/samples
 	@cp bin/$(PROGN) $(DESTDIR)/usr/bin
 	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g213-led
 	@ln -sf $(PROGN) $(DESTDIR)/usr/bin/g410-led
@@ -70,11 +68,9 @@ setup:
 	@cp sample_profiles/* $(DESTDIR)/etc/$(PROGN)/samples
 	@cp udev/$(PROGN).rules $(DESTDIR)/etc/udev/rules.d
 	@test -s /usr/bin/systemd-run && \
-		install -m 755 -d $(DESTDIR)$(SYSTEMDDIR)/system && \
 		cp systemd/$(PROGN)-reboot.service $(DESTDIR)$(SYSTEMDDIR)/system
 
 install-lib: lib
-	@install -m 755 -d $(libdir)
 	@install -m 644 lib/lib$(PROGN).so.$(MAJOR).$(MINOR).$(MICRO) $(libdir)/
 	@ln -sf lib$(PROGN).so.$(MAJOR).$(MINOR).$(MICRO) $(libdir)/lib$(PROGN).so
 
